@@ -1,0 +1,20 @@
+.input-group-text{
+  background-color: transparent !important;
+}
+.form-control{
+  border-left: 0 !important;
+}
+.form-control:focus{
+border-color: #ced4da;
+  box-shadow: none !important;
+}
+.game-detail-header{
+  background-color: #d7dfe5;
+  font-weight: 600;
+}
+.game-detail-header{
+padding: 1rem;
+}
+.game-detail-body .row{
+  padding: 1rem;
+}
