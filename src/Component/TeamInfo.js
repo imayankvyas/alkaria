@@ -31,12 +31,13 @@ const TeamInfo = ({ teamDetail, setTeamDetail, viewTeam, setViewTeam, ...props }
 
     function sideBarFun() {
         setViewTeam((viewTeam) => !viewTeam)
+        setTeamDetail()
     }
 
     return (
         <div>
 
-            <Offcanvas isOpen={viewTeam} toggle={() => sideBarFun()} direction='end' >
+            <Offcanvas isOpen={viewTeam} toggle={() => sideBarFun()} direction='end' responsive="lg">
                 <OffcanvasHeader toggle={() => sideBarFun()} className='game-detail-header align-item-center'>
                     <div className='h5'>{teamDetail?.name}</div>
                 </OffcanvasHeader>

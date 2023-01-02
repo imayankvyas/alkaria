@@ -16,7 +16,6 @@ const Nba = () => {
                 <Search search={search} setSearch={setSearch} />
                 {/* Team Details */}
                 <TeamTable searchTeam={searchTeam} />
-
             </Container>
         </Fragment>
     );

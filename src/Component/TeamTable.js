@@ -5,6 +5,7 @@ import "../App.css";
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import TeamInfo from "./TeamInfo";
+import { toast } from "react-toastify";
 
 
 // Custom style for Data Table
@@ -46,12 +47,7 @@ const customStyles = {
             color: '#004589'
         },
     },
-    selectedHighlightStyle: {
-        // use nth-of-type(n) to override other nth selectors
-        '&:nth-of-type(n)': {
-            backgroundColor: '#aeb0b1'
-        },
-    }
+
 };
 
 // Column for Data Table
@@ -81,11 +77,13 @@ const columns = [
 
 
 const TeamTable = ({ searchTeam }) => {
+
     const [team, setTeam] = useState([]);
     const [teamDetail, setTeamDetail] = useState();
     const [viewTeam, setViewTeam] = useState(false)
     const [fetching, setFetching] = useState(true)
     const [error, setError] = useState(null);
+
 
     // API call effect
     useEffect(() => {
@@ -94,19 +92,29 @@ const TeamTable = ({ searchTeam }) => {
             setError(null);
             setFetching(false)
         })
-            .catch(setError);
+            .catch((err) => {
+                setError(err)
+                toast.error(error?.message ?? "Error occured")
+            });
     }, []);
 
     // Searching team Logic
-
     const searchResult = useMemo(() =>
         team?.data?.filter((teamData) => (
             teamData.name.toString()
-                .toLowerCase() == searchTeam
+                .toLowerCase() === searchTeam
         )), [searchTeam]
-
     )
 
+    const conditionalRowStyles = [
+        {
+            when: row => row?.id === teamDetail?.id ?? null,
+            style: {
+                backgroundColor: '#aeb0b1',
+                userSelect: "none"
+            }
+        }
+    ];
 
     return (
         <Fragment>
@@ -116,14 +124,14 @@ const TeamTable = ({ searchTeam }) => {
                         columns={columns}
                         data={searchResult && searchResult?.length ? searchResult : team.data}
                         customStyles={customStyles}
-                        progressComponent={<Skeleton count={7} />}
+                        progressComponent={<Skeleton count={10} height={'30px'} />}
                         progressPending={fetching}
                         onRowClicked={(row) => { setViewTeam(true); setTeamDetail(row) }}
                         pagination
                         pointerOnHover
                         responsive
                         highlightOnHover
-
+                        conditionalRowStyles={conditionalRowStyles}
 
                     />
                     {viewTeam ? <TeamInfo teamDetail={teamDetail} setTeamDetail={setTeamDetail} viewTeam={viewTeam} setViewTeam={setViewTeam} /> : null}
