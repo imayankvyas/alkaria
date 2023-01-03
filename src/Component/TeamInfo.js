@@ -39,7 +39,7 @@ const TeamInfo = ({ teamDetail, setTeamDetail, viewTeam, setViewTeam, ...props }
 
             <Offcanvas isOpen={viewTeam} toggle={() => sideBarFun()} direction='end' responsive="lg">
                 <OffcanvasHeader toggle={() => sideBarFun()} className='game-detail-header align-item-center'>
-                    <div className='h5'>{teamDetail?.name}</div>
+                    <div className='h5 mb-0'>{teamDetail?.name}</div>
                 </OffcanvasHeader>
                 {fetchingGame ? <Skeleton count={5} /> :
                     <OffcanvasBody className='game-detail-body'>
