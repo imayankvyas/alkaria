@@ -102,9 +102,11 @@ const TeamTable = ({ searchTeam }) => {
     const searchResult = useMemo(() =>
         team?.data?.filter((teamData) => (
             teamData.name.toString()
-                .toLowerCase() === searchTeam
-        )), [searchTeam]
+                .toLowerCase()?.includes(searchTeam, 0)
+        ))
+        , [searchTeam]
     )
+
 
     const conditionalRowStyles = [
         {
@@ -120,9 +122,10 @@ const TeamTable = ({ searchTeam }) => {
         <Fragment>
             {fetching ? <Skeleton count={10} /> :
                 <>
+
                     <DataTable
                         columns={columns}
-                        data={searchResult && searchResult?.length ? searchResult : team.data}
+                        data={searchResult?.length ? searchResult : team?.data}
                         customStyles={customStyles}
                         progressComponent={<Skeleton count={10} height={'30px'} />}
                         progressPending={fetching}
@@ -132,9 +135,10 @@ const TeamTable = ({ searchTeam }) => {
                         responsive
                         highlightOnHover
                         conditionalRowStyles={conditionalRowStyles}
-
                     />
                     {viewTeam ? <TeamInfo teamDetail={teamDetail} setTeamDetail={setTeamDetail} viewTeam={viewTeam} setViewTeam={setViewTeam} /> : null}
+
+
                 </>
             }
 
